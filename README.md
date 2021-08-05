@@ -1,3 +1,3 @@
-# FastML
-Fast Machine Learning ~ FastML ~ intend to expose any trained Machine Learning model thoguh API easy to consume.
+# EasyML
+Easy Machine Learning ~ EasyML ~ intend to expose any trained Machine Learning model through APIs, easy to consume.
 
