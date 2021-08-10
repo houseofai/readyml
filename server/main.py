@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile,Response
 import io, os
 import PIL
 import PIL.Image as Image
@@ -29,31 +29,39 @@ async def image_classification_nasnetLarge(image: UploadFile = File(...)):
 
 @app.post("/image-classification/mobilenet")
 async def image_classification_mobilenet(image: UploadFile = File(...)):
-    contents = image.file.read()
-    image_pil = Image.open(io.BytesIO(contents))
+    image_bytes = image.file.read()
+    image_pil = Image.open(io.BytesIO(image_bytes))
     predicted = mtc.MobileNetV2().infer(image_pil)
     return predicted
 
 @app.post("/image-classification/inception")
 async def image_classification_inception(image: UploadFile = File(...)):
-    contents = image.file.read()
-    image_pil = Image.open(io.BytesIO(contents))
+    image_bytes = image.file.read()
+    image_pil = Image.open(io.BytesIO(image_bytes))
     predicted = mtc.InceptionV3().infer(image_pil)
     return predicted
 
 @app.post("/image-classification/resnet")
 async def image_classification_resnet(image: UploadFile = File(...)):
-    contents = image.file.read()
-    image_pil = Image.open(io.BytesIO(contents))
+    image_bytes = image.file.read()
+    image_pil = Image.open(io.BytesIO(image_bytes))
     predicted = mtc.Resnet50().infer(image_pil)
     return predicted
 
 @app.post("/object-detection")
 @app.post("/object-detection/efficientnet-d7")
 async def object_detection_efficientdet_d7(image: UploadFile = File(...)):
-    contents = image.file.read()
-    image_pil = Image.open(io.BytesIO(contents))
+    image_bytes = image.file.read()
+    image_pil = Image.open(io.BytesIO(image_bytes))
+
     efficientNetD7 = mto.EfficientNetD7()
     data = efficientNetD7.infer(image_pil)
-    new_images = efficientNetD7.draw_boxes(data)
-    return Response(content=image_bytes, media_type="image/png")
+    new_image = efficientNetD7.draw_boxes(image_pil, data)
+    im = Image.fromarray(new_image)
+    im.save("your_file.jpeg")
+
+    img_byte_arr = io.BytesIO()
+    im.save(img_byte_arr, format='PNG')
+    img_byte_arr = img_byte_arr.getvalue()
+
+    return Response(content=img_byte_arr, media_type="image/png")
