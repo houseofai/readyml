@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 .idea
-tests/generated/*
+tests/generated/*.jpeg
