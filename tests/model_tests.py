@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 import fastml.models.keras.classification as mkc
 import fastml.models.tfhub.classification as mtc
 import fastml.models.tfhub.objectdetection as mto
+import fastml.models.tfhub.imagegeneration as mtig
 
 # External
 import PIL
@@ -41,46 +42,63 @@ def _object_detection(image_path, classification_class):
     im.save(f"generated/object_detection_{type(classification_class).__name__}.jpeg")
     return formatted_data, new_image
 
+def _image_generation(classification_class):
+    new_image = classification_class.infer(356)
+    im = Image.fromarray(new_image[0])
+    im.save(f"generated/_image_generation_{type(classification_class).__name__}.jpeg")
+
+
 #image_path = "data/brad.jpg"
 image_path = "data/Trafalgar.jpeg"
 #image_path = "data/Greek Street.jpeg"
+full_test = False
 
-image_classification_nasnetLarge(image_path)
-_image_classification(image_path, mtc.MobileNetV2())
-_image_classification(image_path, mtc.InceptionV3())
-_image_classification(image_path, mtc.Resnet50())
+if full_test:
+    image_classification_nasnetLarge(image_path)
+    _image_classification(image_path, mtc.MobileNetV2())
+    _image_classification(image_path, mtc.InceptionV3())
+    _image_classification(image_path, mtc.Resnet50())
 
-_object_detection(image_path, mto.HourGlass_512x512())
-_object_detection(image_path, mto.HourGlass_1024x1024())
-_object_detection(image_path, mto.Resnet50v1Fpn_512x512())
-_object_detection(image_path, mto.Resnet101v1Fpn_512x512())
-_object_detection(image_path, mto.Resnet50v2_512x512())
-_object_detection(image_path, mto.EfficientdetD0())
-_object_detection(image_path, mto.EfficientdetD1())
-_object_detection(image_path, mto.EfficientdetD2())
-_object_detection(image_path, mto.EfficientdetD3())
-_object_detection(image_path, mto.EfficientdetD4())
-_object_detection(image_path, mto.EfficientdetD5())
-_object_detection(image_path, mto.EfficientdetD6())
-_object_detection(image_path, mto.EfficientNetD7())
-_object_detection(image_path, mto.SsdMobilenetv2())
-_object_detection(image_path, mto.SsdMobilenetV1Fpn_640x640())
-_object_detection(image_path, mto.SsdMobilenetv2FpnLite_320x320())
-_object_detection(image_path, mto.Resnet50V1Fpn_640x640())
-_object_detection(image_path, mto.Resnet50v1Fpn_1024x1024())
-_object_detection(image_path, mto.Resnet101v1Fpn_640x640())
-_object_detection(image_path, mto.Resnet101v1Fpn_1024x1024())
-_object_detection(image_path, mto.Resnet152v1Fpn_640x640())
-_object_detection(image_path, mto.Resnet152v1Fpn_1024x1024())
-_object_detection(image_path, mto.FasterRcnnResnet50v1_640x640())
-_object_detection(image_path, mto.FasterRcnnResnet50v1_1024x1024())
-_object_detection(image_path, mto.FasterRcnnResnet50v1_800x1333())
-_object_detection(image_path, mto.FasterRcnnResnet101v1_640x640())
-_object_detection(image_path, mto.FasterRcnnResnet101v1_1024x1024())
-_object_detection(image_path, mto.FasterRcnnResnet101v1_800x1333())
-_object_detection(image_path, mto.FasterRcnnResnet152v1_640x640())
-_object_detection(image_path, mto.FasterRcnnResnet152v1_1024x1024())
-_object_detection(image_path, mto.FasterRcnnResnet152v1_800x1333())
-_object_detection(image_path, mto.FasterRcnnInceptionResnetv2_640x640())
-_object_detection(image_path, mto.FasterRcnnInceptionResnetv2_1024x1024())
-_object_detection(image_path, mto.MaskRcnnInceptionResnetv2_1024x1024())
+    _object_detection(image_path, mto.HourGlass_512x512())
+    _object_detection(image_path, mto.HourGlass_1024x1024())
+    _object_detection(image_path, mto.Resnet50v1Fpn_512x512())
+    _object_detection(image_path, mto.Resnet101v1Fpn_512x512())
+    _object_detection(image_path, mto.Resnet50v2_512x512())
+    _object_detection(image_path, mto.EfficientdetD0())
+    _object_detection(image_path, mto.EfficientdetD1())
+    _object_detection(image_path, mto.EfficientdetD2())
+    _object_detection(image_path, mto.EfficientdetD3())
+    _object_detection(image_path, mto.EfficientdetD4())
+    _object_detection(image_path, mto.EfficientdetD5())
+    _object_detection(image_path, mto.EfficientdetD6())
+    _object_detection(image_path, mto.EfficientNetD7())
+    _object_detection(image_path, mto.SsdMobilenetv2())
+    _object_detection(image_path, mto.SsdMobilenetV1Fpn_640x640())
+    _object_detection(image_path, mto.SsdMobilenetv2FpnLite_320x320())
+    _object_detection(image_path, mto.Resnet50V1Fpn_640x640())
+    _object_detection(image_path, mto.Resnet50v1Fpn_1024x1024())
+    _object_detection(image_path, mto.Resnet101v1Fpn_640x640())
+    _object_detection(image_path, mto.Resnet101v1Fpn_1024x1024())
+    _object_detection(image_path, mto.Resnet152v1Fpn_640x640())
+    _object_detection(image_path, mto.Resnet152v1Fpn_1024x1024())
+    _object_detection(image_path, mto.FasterRcnnResnet50v1_640x640())
+    _object_detection(image_path, mto.FasterRcnnResnet50v1_1024x1024())
+    _object_detection(image_path, mto.FasterRcnnResnet50v1_800x1333())
+    _object_detection(image_path, mto.FasterRcnnResnet101v1_640x640())
+    _object_detection(image_path, mto.FasterRcnnResnet101v1_1024x1024())
+    _object_detection(image_path, mto.FasterRcnnResnet101v1_800x1333())
+    _object_detection(image_path, mto.FasterRcnnResnet152v1_640x640())
+    _object_detection(image_path, mto.FasterRcnnResnet152v1_1024x1024())
+    _object_detection(image_path, mto.FasterRcnnResnet152v1_800x1333())
+    _object_detection(image_path, mto.FasterRcnnInceptionResnetv2_640x640())
+    _object_detection(image_path, mto.FasterRcnnInceptionResnetv2_1024x1024())
+    _object_detection(image_path, mto.MaskRcnnInceptionResnetv2_1024x1024())
+    
+    _image_generation(mtig.BigGanDeep128())
+    _image_generation(mtig.BigGanDeep256())
+    _image_generation(mtig.BigGanDeep512())
+    _image_generation(mtig.BigGan128())
+    _image_generation(mtig.BigGan256())
+    _image_generation(mtig.BigGan512())
+else:
+    print("No test")

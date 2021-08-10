@@ -4,6 +4,7 @@ import pkgutil
 labels_path = {
     'ms_coco': 'mscoco_labels.json',
     'imagenet':'ImageNetLabels.txt',
+    'tfhub_biggan_categories':'tfhub_biggan_categories.json',
 }
 
 def _get_labels_path(name):
