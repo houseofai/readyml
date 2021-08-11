@@ -4,7 +4,6 @@ import numpy as np
 import os
 from readyml.labels import labels_loader
 
-from tensorflow.keras.applications import NASNetLarge
 from tensorflow.keras.preprocessing import image as img_prep
 from tensorflow.keras.applications.xception import preprocess_input, decode_predictions
 
@@ -51,13 +50,13 @@ class ClassificationModel():
 class NASNetLarge():
 
     def __init__(self):
-        self.model = NASNetLarge(weights='imagenet')
+        self.model = tf.keras.applications.NASNetLarge(weights='imagenet')
 
     def _transform(self, image):
         image = img_prep.img_to_array(image)
-        image = tf.image.resize(x, [331, 331])
-        image = tf.expand_dims(x, axis=0)
-        image = preprocess_input(tf.identity(x))
+        image = tf.image.resize(image, [331, 331])
+        image = tf.expand_dims(image, axis=0)
+        image = preprocess_input(tf.identity(image))
         return image
 
     def infer(self, image):
