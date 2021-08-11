@@ -11,12 +11,13 @@ DESCRIPTION = 'ReadyML - Easy and Ready Machine Learning.'
 URL = 'https://github.com/houseofai/readyml'
 AUTHOR = 'Odyssée'
 REQUIRES_PYTHON = '>=3.8.0'
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
     'tensorflow-hub==0.12.0',
     'tensorflow==2.5.0',
+    'pillow'
 ]
 
 ################################################################################
@@ -64,7 +65,8 @@ class UploadCommand(Command):
             pass
 
         self.status('Building Source and Wheel (universal) distribution…')
-        os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+        #os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+        os.system('{0} setup.py sdist'.format(sys.executable))
 
         self.status('Uploading the package to PyPI via Twine…')
         os.system('twine upload dist/*')
@@ -88,8 +90,8 @@ setup(
     install_requires=REQUIRED,
 
     #include_package_data=True,
-    #packages=['readyml', 'readyml.utils', 'readyml.labels'],
-    packages=find_packages(NAME),
+    packages=['readyml', 'readyml.utils', 'readyml.labels'],
+    #packages=find_packages(NAME),
 
     # $ setup.py publish support.
     cmdclass={
