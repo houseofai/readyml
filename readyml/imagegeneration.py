@@ -1,6 +1,6 @@
 import io
 import os
-from runml.labels import labels_loader
+from readyml.labels import labels_loader
 from scipy.stats import truncnorm
 import numpy as np
 import tensorflow_hub as hub

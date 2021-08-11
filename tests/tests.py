@@ -4,11 +4,10 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Internal
-import runml.models.keras.classification as mkc
-import runml.imageclassification as fic
-import runml.objectdetection as fod
-import runml.imagegeneration as figen
-import runml.facegeneration as ffgen
+import readyml.imageclassification as fic
+import readyml.objectdetection as fod
+import readyml.imagegeneration as figen
+import readyml.facegeneration as ffgen
 
 # External
 import PIL
@@ -31,7 +30,7 @@ def _image_classification(image_path, classification_class):
 
 def image_classification_nasnetlarge(image_path):
     image_pil = Image.open(image_path)
-    predicted = mkc.nasnetlarge(image_pil)
+    predicted = fic.nasnetlarge(image_pil)
     return predicted
 
 
@@ -66,7 +65,7 @@ image_path = "data/Trafalgar.jpeg"
 full_test = False
 
 if full_test:
-    image_classification_nasnetlarge(image_path)
+    _image_classification(image_path, fic.NASNetLarge())
     _image_classification(image_path, fic.MobileNetV2())
     _image_classification(image_path, fic.InceptionV3())
     _image_classification(image_path, fic.Resnet50())
@@ -111,6 +110,6 @@ if full_test:
     _image_generation(fgen.BigGan128())
     _image_generation(fgen.BigGan256())
     _image_generation(fgen.BigGan512())
-else:
-
     _face_generation(ffgen.FaceGeneration())
+else:
+    print("No test")

@@ -4,8 +4,8 @@ import numpy as np
 import os
 import json
 
-import runml.libs.vendors.tensorflow.visualization_utils as viz_utils
-from runml.labels import labels_loader
+import readyml.utils.visualization_utils as viz_utils
+from readyml.labels import labels_loader
 
 OD_MODELS = {
     'hourglass_512x512': 'https://tfhub.dev/tensorflow/centernet/hourglass_512x512/1',
