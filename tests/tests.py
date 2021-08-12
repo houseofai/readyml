@@ -15,13 +15,9 @@ import PIL.Image as Image
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
+import readyml.utils.fwks_init
 
-physical_devices = tf.config.list_physical_devices('GPU')
-for device in physical_devices:
-    tf.config.experimental.set_memory_growth(device, True)
-
-os.environ['TFHUB_DOWNLOAD_PROGRESS'] = "1"
-
+fwks_init.init_tensorflow()
 
 def _image_classification(image_path, classification_class):
     image_pil = Image.open(image_path)
