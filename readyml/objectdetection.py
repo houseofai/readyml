@@ -12,7 +12,7 @@ fwks_init.init_tensorflow()
 class ObjectDetection():
     def __init__(self, model_name, threshold):
         self.labels = self._load_labels()
-        self.detector = model_utils.load(model_name)
+        self.model = model_utils.load(model_name)
         self.threshold = threshold
 
     def _load_labels(self):
@@ -24,7 +24,7 @@ class ObjectDetection():
     def infer(self, image_pil):
         image_np = np.array(image_pil)
         image_tensor = tf.expand_dims(image_np, axis=0)
-        return self.detector(image_tensor)
+        return self.model(image_tensor)
 
     def format(self, data):
         boxes = data.get('detection_boxes')[0].numpy()
