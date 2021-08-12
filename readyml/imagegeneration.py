@@ -1,30 +1,17 @@
-import io
-import os
+import io, os
 from readyml.labels import labels_loader
 from scipy.stats import truncnorm
 import numpy as np
-import tensorflow_hub as hub
 import tensorflow.compat.v1 as tf
-
-
-# BigGAN-deep models
-IG_MODELS = {
-    'biggan-deep-128': 'https://tfhub.dev/deepmind/biggan-deep-128/1',  # 128x128 BigGAN-deep
-    'biggan-deep-256': 'https://tfhub.dev/deepmind/biggan-deep-256/1',  # 256x256 BigGAN-deep
-    'biggan-deep-512': 'https://tfhub.dev/deepmind/biggan-deep-512/1',  # 512x512 BigGAN-deep
-
-    # BigGAN (original) models
-    'biggan-128': 'https://tfhub.dev/deepmind/biggan-128/2',  # 128x128 BigGAN
-    'biggan-256': 'https://tfhub.dev/deepmind/biggan-256/2',  # 256x256 BigGAN
-    'biggan-512': 'https://tfhub.dev/deepmind/biggan-512/2',  # 512x512 BigGAN
-}
+from readyml.utils import fwks_init, model_utils
 
 
 class ImageGenerationModel():
-    def __init__(self, model_path):
+    def __init__(self, model_name):
         tf.disable_v2_behavior()
         tf.reset_default_graph()
-        self.module = hub.Module(model_path)
+
+        self.module = model_utils.load_module(model_name)
         inputs = {k: tf.placeholder(v.dtype, v.get_shape().as_list(), k)
                   for k, v in self.module.get_input_info_dict().items()}
 
@@ -94,35 +81,35 @@ class ImageGenerationModel():
         noise = self._truncated_z_sample(num_samples, truncation, noise_seed)
         return self._sample(noise, category_num, truncation=truncation)
 
-    def __del__(self):
-        tf.enable_v2_behavior()
+    #def __del__(self):
+    #    tf.enable_v2_behavior()
 
 
 class BigGanDeep128(ImageGenerationModel):
     def __init__(self):
-        super().__init__(IG_MODELS.get('biggan-deep-128'))
+        super().__init__('biggan-deep-128')
 
 
 class BigGanDeep256(ImageGenerationModel):
     def __init__(self):
-        super().__init__(IG_MODELS.get('biggan-deep-256'))
+        super().__init__('biggan-deep-256')
 
 
 class BigGanDeep512(ImageGenerationModel):
     def __init__(self):
-        super().__init__(IG_MODELS.get('biggan-deep-512'))
+        super().__init__('biggan-deep-512')
 
 
 class BigGan128(ImageGenerationModel):
     def __init__(self):
-        super().__init__(IG_MODELS.get('biggan-128'))
+        super().__init__('biggan-128')
 
 
 class BigGan256(ImageGenerationModel):
     def __init__(self):
-        super().__init__(IG_MODELS.get('biggan-256'))
+        super().__init__('biggan-256')
 
 
 class BigGan512(ImageGenerationModel):
     def __init__(self):
-        super().__init__(IG_MODELS.get('biggan-512'))
+        super().__init__('biggan-512')

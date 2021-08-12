@@ -1,59 +1,18 @@
-import tensorflow_hub as hub
 import tensorflow as tf
 import numpy as np
-import os
 import json
 
 import readyml.utils.visualization_utils as viz_utils
 from readyml.labels import labels_loader
+from readyml.utils import fwks_init, model_utils
 
-OD_MODELS = {
-    'hourglass_512x512': 'https://tfhub.dev/tensorflow/centernet/hourglass_512x512/1',
-    # 'hourglass_512x512_kpts' : 'https://tfhub.dev/tensorflow/centernet/hourglass_512x512_kpts/1',
-    'hourglass_1024x1024': 'https://tfhub.dev/tensorflow/centernet/hourglass_1024x1024/1',
-    # 'hourglass_1024x1024_kpts' : 'https://tfhub.dev/tensorflow/centernet/hourglass_1024x1024_kpts/1',
-    'resnet50v1_fpn_512x512': 'https://tfhub.dev/tensorflow/centernet/resnet50v1_fpn_512x512/1',
-    # 'resnet50v1_fpn_512x512_kpts' : 'https://tfhub.dev/tensorflow/centernet/resnet50v1_fpn_512x512_kpts/1',
-    'resnet101v1_fpn_512x512': 'https://tfhub.dev/tensorflow/centernet/resnet101v1_fpn_512x512/1',
-    'resnet50v2_512x512': 'https://tfhub.dev/tensorflow/centernet/resnet50v2_512x512/1',
-    # 'resnet50v2_512x512_kpts' : 'https://tfhub.dev/tensorflow/centernet/resnet50v2_512x512_kpts/1',
-    'efficientdet/d0': 'https://tfhub.dev/tensorflow/efficientdet/d0/1',
-    'efficientdet/d1': 'https://tfhub.dev/tensorflow/efficientdet/d1/1',
-    'efficientdet/d2': 'https://tfhub.dev/tensorflow/efficientdet/d2/1',
-    'efficientdet/d3': 'https://tfhub.dev/tensorflow/efficientdet/d3/1',
-    'efficientdet/d4': 'https://tfhub.dev/tensorflow/efficientdet/d4/1',
-    'efficientdet/d5': 'https://tfhub.dev/tensorflow/efficientdet/d5/1',
-    'efficientdet/d6': 'https://tfhub.dev/tensorflow/efficientdet/d6/1',
-    'efficientdet/d7': 'https://tfhub.dev/tensorflow/efficientdet/d7/1',
-    'ssd_mobilenet_v2': 'https://tfhub.dev/tensorflow/ssd_mobilenet_v2/2',
-    'ssd_mobilenet_v1/fpn_640x640': 'https://tfhub.dev/tensorflow/ssd_mobilenet_v1/fpn_640x640/1',
-    'ssd_mobilenet_v2/fpnlite_320x320': 'https://tfhub.dev/tensorflow/ssd_mobilenet_v2/fpnlite_320x320/1',
-    'ssd_mobilenet_v2/fpnlite_640x640': 'https://tfhub.dev/tensorflow/ssd_mobilenet_v2/fpnlite_640x640/1',
-    'resnet50_v1_fpn_640x640': 'https://tfhub.dev/tensorflow/retinanet/resnet50_v1_fpn_640x640/1',
-    'resnet50_v1_fpn_1024x1024': 'https://tfhub.dev/tensorflow/retinanet/resnet50_v1_fpn_1024x1024/1',
-    'resnet101_v1_fpn_640x640': 'https://tfhub.dev/tensorflow/retinanet/resnet101_v1_fpn_640x640/1',
-    'resnet101_v1_fpn_1024x1024': 'https://tfhub.dev/tensorflow/retinanet/resnet101_v1_fpn_1024x1024/1',
-    'resnet152_v1_fpn_640x640': 'https://tfhub.dev/tensorflow/retinanet/resnet152_v1_fpn_640x640/1',
-    'resnet152_v1_fpn_1024x1024': 'https://tfhub.dev/tensorflow/retinanet/resnet152_v1_fpn_1024x1024/1',
-    'faster_rcnn/resnet50_v1_640x640': 'https://tfhub.dev/tensorflow/faster_rcnn/resnet50_v1_640x640/1',
-    'faster_rcnn/resnet50_v1_1024x1024': 'https://tfhub.dev/tensorflow/faster_rcnn/resnet50_v1_1024x1024/1',
-    'faster_rcnn/resnet50_v1_800x1333': 'https://tfhub.dev/tensorflow/faster_rcnn/resnet50_v1_800x1333/1',
-    'faster_rcnn/resnet101_v1_640x640': 'https://tfhub.dev/tensorflow/faster_rcnn/resnet101_v1_640x640/1',
-    'faster_rcnn/resnet101_v1_1024x1024': 'https://tfhub.dev/tensorflow/faster_rcnn/resnet101_v1_1024x1024/1',
-    'faster_rcnn/resnet101_v1_800x1333': 'https://tfhub.dev/tensorflow/faster_rcnn/resnet101_v1_800x1333/1',
-    'faster_rcnn/resnet152_v1_640x640': 'https://tfhub.dev/tensorflow/faster_rcnn/resnet152_v1_640x640/1',
-    'faster_rcnn/resnet152_v1_1024x1024': 'https://tfhub.dev/tensorflow/faster_rcnn/resnet152_v1_1024x1024/1',
-    'faster_rcnn/resnet152_v1_800x1333': 'https://tfhub.dev/tensorflow/faster_rcnn/resnet152_v1_800x1333/1',
-    'faster_rcnn/inception_resnet_v2_640x640': 'https://tfhub.dev/tensorflow/faster_rcnn/inception_resnet_v2_640x640/1',
-    'faster_rcnn/inception_resnet_v2_1024x1024': 'https://tfhub.dev/tensorflow/faster_rcnn/inception_resnet_v2_1024x1024/1',
-    'mask_rcnn/inception_resnet_v2_1024x1024': 'https://tfhub.dev/tensorflow/mask_rcnn/inception_resnet_v2_1024x1024/1'
-}
+fwks_init.init_tensorflow()
 
 
 class ObjectDetection():
     def __init__(self, model_name, threshold):
         self.labels = self._load_labels()
-        self.detector = hub.load(OD_MODELS.get(model_name))
+        self.detector = model_utils.load(model_name)
         self.threshold = threshold
 
     def _load_labels(self):
@@ -164,7 +123,7 @@ class EfficientdetD6(ObjectDetection):
         super().__init__("efficientdet/d6", threshold)
 
 
-class EfficientNetD7(ObjectDetection):
+class EfficientdetD7(ObjectDetection):
     def __init__(self, threshold=0.3):
         super().__init__("efficientdet/d7", threshold)
 
@@ -174,7 +133,7 @@ class SsdMobilenetv2(ObjectDetection):
         super().__init__("ssd_mobilenet_v2", threshold)
 
 
-class SsdMobilenetV1Fpn_640x640(ObjectDetection):
+class SsdMobilenetv1Fpn_640x640(ObjectDetection):
     def __init__(self, threshold=0.3):
         super().__init__("ssd_mobilenet_v1/fpn_640x640", threshold)
 
