@@ -6,6 +6,9 @@ from readyml.labels import labels_loader
 
 from tensorflow.keras.preprocessing import image as img_prep
 from tensorflow.keras.applications.xception import preprocess_input, decode_predictions
+import readyml.utils.fwks_init
+
+fwks_init.init_tensorflow()
 
 class ClassificationModel():
 
