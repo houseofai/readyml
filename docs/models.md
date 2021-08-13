@@ -1,5 +1,7 @@
 # Models
 
+Here you can find the list of models available.
+
 ## Image Classification
 ---
 ### Model: NASNetLarge
@@ -23,7 +25,7 @@ nasnetlarge = ric.NASNetLarge()
 results = nasnetlarge.infer(image_pil, threshold=30)
 print(results)
 ```
-**Results:** The labels and it's accuracy in percent.
+**Results:** The labels and its percent accuracy.
 ```json
 [
     {
@@ -96,7 +98,7 @@ im.save("myimage.jpeg")
 
 print(formatted_data)
 ```
-**Results:** An array of found objects, with the object's label, the score and, the bounding box coordinates.
+**Results:** An array of found objects, with the object's label, score, and bounding box coordinates.
 ```json
 [
   {"label": "person",

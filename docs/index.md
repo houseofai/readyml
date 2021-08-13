@@ -17,7 +17,7 @@
 
 
 ## Prerequisites
-- [Python](https://www.python.org/downloads/) >= 3.8
+- [Python](https://www.python.org/downloads/) >= 3.7
 - The python package manager: [pip](https://pip.pypa.io/en/stable/installation/)
 
 ## Installation
@@ -78,3 +78,5 @@ The above example means that the image can be categorized into three categories:
 - `Monastery` with a confidence score of `38.63%`,
 - `Palace` with a confidence score of `21.18%`, or
 - `Patio` with a confidence score of `14.9%`,
+
+Once ReadyML is intalled, you can start to use all the available models. Check the [Models](models.md) section
