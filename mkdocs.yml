@@ -1,8 +1,10 @@
-site_name: MkLorum123
-site_url: https://example.com/
+site_name: ReadyML
+site_description: ReadyML makes trained Machine Learning models ready to consume with minimum effort.
+site_url: https://github.com/houseofai/readyml
+repo_url: https://github.com/houseofai/readyml
 
 nav:
-    - Home: index.md
-    - About: about.md
+    - 'Home': index.md
+    - 'Models': models.md
 
 theme: readthedocs

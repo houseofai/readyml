@@ -1,17 +1,80 @@
-# MkLorum
+# ReadyML - Easy and Ready Machine Learning.
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+## What is ReadyML?
 
-## Commands
+**ReadyML** makes trained Machine Learning models ready to consume with minimum effort. With **ReadyML** you can to play with Image classification, Object Detection, Image Generation, Face Generation, Pose Detection... and much more!
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+*This library is currently a prototype. If you face any issue or if the documentation is unclear, feel free to open a [ticket issue](https://github.com/houseofai/readyml/issues)*
 
-## Project layout
+## Model Categories
+| Name | Description |
+|-|-|
+| [Image Classification](#user-content-image-classification) | Provides category labels for an image |
+| [Object Detection](#user-content-objet-detection) | Detect objects in a image |
+| [Image Generation](#user-content-image-generation) | Generate image from a category from scratch |
+| [Face Generation](#user-content-face-generation) | Generate a face image from scratch |
+| [Pose Detection](#user-content-pose-detection) | Detect the keypoints of human pose (ankles, shoulders, elbows, ...) |
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+
+## Prerequisites
+- [Python](https://www.python.org/downloads/) >= 3.8
+- The python package manager: [pip](https://pip.pypa.io/en/stable/installation/)
+
+## Installation
+ReadyML installation is very convenient as it is packaged as a pip package. To install it, just run:
+```
+pip install readyml
+```
+`pip` will automatically install the dependencies like Tensorflow, Pytorch, Caffe...
+
+## How to use it?
+The general format to use a model (`infer`) is that way:
+```python
+from readyml import <model-category> as ric
+
+# Initialize the model
+model = ric.<TheModelIwantToUse>()
+
+# Run the model
+results = model.infer(<arguments>)
+
+# Do something with the results
+```
+The format of the result differs from model to model. See the model names below to get a detailed description.
+
+For example, to use the image classification model `NASNetLarge`, do:
+```python
+from readyml import imageclassification as ric
+import PIL.Image as Image
+
+# Read an image
+image_pil = Image.open("./images/greek_street.jpeg")
+
+# Instantiate the model class
+nasnetlarge = ric.NASNetLarge()
+# Get and print the results
+results = nasnetlarge.infer(image_pil)
+print(results)
+```
+**Results:** The labels and their confidence score in percent.
+```json
+[
+    {
+        "label": "monastery",
+        "score": 38.63
+    },
+    {
+        "label": "palace",
+        "score": 21.18
+    },
+    {
+        "label": "patio",
+        "score": 14.9
+    }
+]
+
+```
+The above example means that the image can be categorized into three categories:
+- `Monastery` with a confidence score of `38.63%`,
+- `Palace` with a confidence score of `21.18%`, or
+- `Patio` with a confidence score of `14.9%`,
