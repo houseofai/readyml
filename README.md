@@ -1,16 +1,17 @@
-^ Check here for easy navigation
-
 # ReadyML - Easy and Ready Machine Learning.
 
-ReadyML makes trained Machine Learning models ready to consume with minimum effort. With ReadyML you are able to play with Image classification, Object Detection, Image Generation, ... and much more!
+**ReadyML** makes trained Machine Learning models ready to consume with minimum effort. With **ReadyML** you can to play with Image classification, Object Detection, Image Generation, Face Generation, Pose Detection... and much more!
+
+*This library is currently a prototype. If you face any issue or if the documentation is unclear, feel free to open a [ticket issue](https://github.com/houseofai/readyml/issues)*
 
 ## Model Categories
 | Name | Description |
 |-|-|
 | [Image Classification](#user-content-image-classification) | Provides category labels for an image |
-| Object Detection |  |
-| Image Generation |  |
-| Face Generation |  |
+| [Object Detection](#user-content-objet-detection) | Detect objects in a image |
+| [Image Generation](#user-content-image-generation) | Generate image from a category from scratch |
+| [Face Generation](#user-content-face-generation) | Generate a face image from scratch |
+| [Pose Detection](#user-content-pose-detection) | Detect the keypoints of human pose (ankles, shoulders, elbows, ...) |
 
 
 ## Prerequisites
@@ -29,12 +30,15 @@ In general, the format to send data and get results from a model is that way:
 ```python
 from readyml import imageclassification as ric
 
+# Initialize the model
 model = ric.<TheModelIwantToUse>()
+
+# Run the model
 results = model.infer(<arguments>)
 
 # Do something with the results
 ```
-The result' format differ from model to model. See the model names below to get the description
+The result' format differs from model to model. See the model names below to get a detailed description.
 
 For example, to use the image classification model `NASNetLarge`, do:
 ```python
@@ -42,7 +46,7 @@ from readyml import imageclassification as ric
 import PIL.Image as Image
 
 # Read an image
-image_pil = Image.open("./images/brad.jpg")
+image_pil = Image.open("./images/greek_street.jpeg")
 
 # Instantiate the model class
 nasnetlarge = ric.NASNetLarge()
@@ -50,13 +54,28 @@ nasnetlarge = ric.NASNetLarge()
 results = nasnetlarge.infer(image_pil)
 print(results)
 ```
-**Results:** The labels and it's accuracy in percent.
+**Results:** The labels and their confidence score in percent.
 ```json
-[["trench_coat" "69.12"]
- ["suit" "15.73"]
- ["umbrella" "1.99"]]
-```
+[
+    {
+        "label": "monastery",
+        "score": 38.63
+    },
+    {
+        "label": "palace",
+        "score": 21.18
+    },
+    {
+        "label": "patio",
+        "score": 14.9
+    }
+]
 
+```
+The above example means that the image can be categorized into three categories:
+- `Monastery` with a confidence score of `38.63%`,
+- `Palace` with a confidence score of `21.18%`, or
+- `Patio` with a confidence score of `14.9%`,
 
 
 
@@ -66,8 +85,6 @@ print(results)
 ---
 #### Model: NASNetLarge
 Category: Image Classification
-
-
 
 **Class:** readyml.imageclassification.NASNetLarge
 
@@ -79,19 +96,22 @@ from readyml import imageclassification as ric
 import PIL.Image as Image
 
 # Read an image
-image_pil = Image.open("./images/brad.jpg")
+image_pil = Image.open("../images/greek_street.jpeg")
 
 # Instantiate the model class
 nasnetlarge = ric.NASNetLarge()
-# Get and print the results
-results = nasnetlarge.infer(image_pil)
+# Get categories with a confidence score equal or above 30%
+results = nasnetlarge.infer(image_pil, threshold=30)
 print(results)
 ```
 **Results:** The labels and it's accuracy in percent.
 ```json
-[["trench_coat" "69.12"]
- ["suit" "15.73"]
- ["umbrella" "1.99"]]
+[
+    {
+        "label": "monastery",
+        "score": 38.63
+    }
+]
 ```
 
 ---
@@ -157,7 +177,7 @@ im.save("myimage.jpeg")
 
 print(formatted_data)
 ```
-**Results:** An array of found objects, with the object's label, the score and the bounding box coordinates.
+**Results:** An array of found objects, with the object's label, the score and, the bounding box coordinates.
 ```json
 [
   {"label": "person",
@@ -504,3 +524,33 @@ image = Image.fromarray(image.numpy())
 image.save("myimage.jpeg")
 ```
 **Result:** A generated face image
+
+---
+### Pose Detection
+
+---
+#### Model: Movenet Singlepose Lightning
+Category: Pose Detection
+
+**Class:** readyml.posedetection.MovenetSingleposeLightning
+
+**Example of use:**
+```python
+from readyml import posedetection as rpd
+import PIL.Image as Image
+
+# Read an image
+image_pil = Image.open("../images/brad.jpg")
+
+# Instantiate the model class
+model = rpd.MovenetSingleposeLightning()
+
+keypoint_with_scores = model.infer(image_pil)
+
+new_image = model.draw(image_pil, keypoint_with_scores)
+im = Image.fromarray(new_image)
+im.save("myimage.jpeg")
+
+print(keypoint_with_scores)
+```
+**Result:** The original image with the keypoints
