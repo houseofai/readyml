@@ -18,7 +18,9 @@ REQUIRED = [
     'tensorflow-hub==0.12.0',
     'tensorflow==2.5.0',
     'pillow',
-    'scipy'
+    'scipy',
+    'imageio',
+    'matplotlib'
 ]
 
 ################################################################################
