@@ -1,12 +1,12 @@
 import tensorflow_hub as hub
 import tensorflow as tf
 import numpy as np
-import os
+import os, json
 from readyml.labels import labels_loader
 
 from tensorflow.keras.preprocessing import image as img_prep
 from tensorflow.keras.applications.xception import preprocess_input, decode_predictions
-import readyml.utils.fwks_init
+from readyml.utils import fwks_init
 
 fwks_init.init_tensorflow()
 
@@ -62,15 +62,23 @@ class NASNetLarge():
         image = preprocess_input(tf.identity(image))
         return image
 
-    def infer(self, image):
+
+    def _format(self, results, threshold):
+        results = np.asarray(results)
+        # Convert to percent
+        formatted_result = []
+        for _, label, score in results:
+            score = np.around(score.astype(np.float)*100, 2)
+            if score >= threshold:
+                formatted_result.append({"label":label, "score":score})
+        return json.dumps(formatted_result, sort_keys=True, indent=4)
+
+
+    def infer(self, image, threshold=10):
         image = self._transform(image)
         prediction = self.model.predict(image)
         pred = decode_predictions(prediction, top=3)[0]
-        pred = np.asarray(pred)
-
-        # Convert to percent
-        pred[:,2] = np.around(pred[:,2].astype(np.float)*100, 2)
-        return pred[:,1:3]
+        return self._format(pred, threshold)
 
 
 class MobileNetV2(ClassificationModel):
