@@ -41,5 +41,6 @@
   "biggan-256": "https://tfhub.dev/deepmind/biggan-256/2",
   "biggan-512": "https://tfhub.dev/deepmind/biggan-512/2",
   "progan-128": "https://tfhub.dev/google/progan-128/1",
-  "movenet-singlepose-lightning":"https://tfhub.dev/google/movenet/singlepose/lightning/4"
+  "movenet-singlepose-lightning":"https://tfhub.dev/google/movenet/singlepose/lightning/4",
+  "esrgan-tf2": "https://tfhub.dev/captain-pool/esrgan-tf2/1"
 }
