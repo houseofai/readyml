@@ -20,7 +20,8 @@ REQUIRED = [
     'pillow',
     'scipy',
     'imageio',
-    'matplotlib'
+    'matplotlib',
+    'opencv-python'
 ]
 
 ################################################################################
