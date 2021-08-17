@@ -43,11 +43,14 @@ class ObjectDetection():
             score = np.around(score.astype(np.float)*100, 2)
             if score >= threshold:
                 ymin, xmin, ymax, xmax = box[0], box[1], box[2], box[3]
-                (left, right, top, bottom) = (xmin * im_width, xmax * im_width,
-                                            ymin * im_height, ymax * im_height)
+
+                # left, right, top, bottom
+                edges = [int(i) for i in (xmin * im_width, xmax * im_width,
+                                            ymin * im_height, ymax * im_height)]
+
                 results.append({'label': self.labels.get(class_id).get('name'),
                                 'score': score,
-                                'box': [left, right, top, bottom]})
+                                'box': edges})
         return results
 
     def _draw_boxes(self, image_pil, boxes, classes, scores, masks, threshold):
