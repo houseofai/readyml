@@ -76,9 +76,9 @@ class NASNetLarge():
 
     def infer(self, image, threshold=10):
         image = self._transform(image)
-        prediction = self.model.predict(image)
-        pred = decode_predictions(prediction, top=3)[0]
-        return self._format(pred, threshold)
+        results = self.model.predict(image)
+        results = decode_predictions(results, top=3)[0]
+        return self._format(results, threshold)
 
 
 class MobileNetV2(ClassificationModel):
