@@ -1,5 +1,3 @@
-# Models
-
 Here you can find the list of models available.
 
 ## Image Classification
