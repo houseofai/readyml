@@ -51,7 +51,7 @@ class ObjectDetection():
                 results.append({'label': self.labels.get(class_id).get('name'),
                                 'score': score,
                                 'box': edges})
-        return results
+        return json.dumps(results, sort_keys=True, indent=4)
 
     def _draw_boxes(self, image_pil, boxes, classes, scores, masks, threshold):
 
