@@ -101,14 +101,28 @@ print(formatted_data)
 **Results:** An array of found objects, with the object's label, score, and bounding box coordinates.
 ```json
 [
-  {"label": "person",
-  "score": 96.78,
-  "box": array([0.13304743, 0.39016643, 0.86212194, 0.77914953], dtype=float32)},
-
-  {"label": "person",
-    "score": 85.62,
-    "box": array([0.21573147, 0.74954087, 0.8551339 , 0.99806523], dtype=float32)}
+    {
+        "box": [
+            1111,
+            2219,
+            570,
+            3696
+        ],
+        "label": "person",
+        "score": 96.78
+    },
+    {
+        "box": [
+            2134,
+            2842,
+            925,
+            3666
+        ],
+        "label": "person",
+        "score": 85.62
+    }
 ]
+
 ```
 ---
 ### Model: Hourglass 1024x1024
@@ -470,8 +484,15 @@ keypoint_with_scores = model.infer(image_pil)
 
 new_image = model.draw(image_pil, keypoint_with_scores)
 im = Image.fromarray(new_image)
-im.save("myimage.jpeg")
+im.save("pose-detection.jpeg")
 
 print(keypoint_with_scores)
 ```
 **Result:** The original image with the keypoints
+
+---
+## Image Super Resolution
+
+---
+### Model: Enhanced Super Resolution GAN
+Category: Image Super Resolution
