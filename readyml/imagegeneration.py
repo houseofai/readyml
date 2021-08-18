@@ -3,7 +3,7 @@ from readyml.labels import labels_loader
 from scipy.stats import truncnorm
 import numpy as np
 import tensorflow.compat.v1 as tf
-from readyml.utils import fwks_init, model_utils
+from readyml.utils import model_utils
 
 
 class ImageGenerationModel():
