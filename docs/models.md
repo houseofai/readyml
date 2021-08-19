@@ -75,26 +75,24 @@ Category: Object Detection
 
 **Reference:** []()
 
+![Object Detection](img/objectdetection.jpg)
+
 **Example of use:**
 ```python
 from readyml import objectdetection as rod
 import PIL.Image as Image
 
 ## Read an image
-image_pil = Image.open("./images/brad.jpg")
+image_pil = Image.open("./images/trafalgar.jpg")
 
 ## Instantiate the model class
 model = rod.HourGlass_512x512()
 
-data = model.infer(image_pil)
-formatted_data = model.format(data)
-new_image = model.draw_boxes(image_pil, data)
+preds, image = model.infer(image_pil)
+im = Image.fromarray(image)
+im.save("trafalgar.jpg")
 
-## Save the new image with detection boxes
-im = Image.fromarray(new_image)
-im.save("myimage.jpeg")
-
-print(formatted_data)
+print(preds)
 ```
 **Results:** An array of found objects, with the object's label, score, and bounding box coordinates.
 ```json
@@ -467,13 +465,15 @@ Category: Pose Detection
 
 **Class:** readyml.posedetection.MovenetSingleposeLightning
 
+![Movenet Singlepose](img/movenet-singlepose-lightning.jpg)
+
 **Example of use:**
 ```python
 from readyml import posedetection as rpd
 import PIL.Image as Image
 
 ## Read an image
-image_pil = Image.open("../images/brad.jpg")
+image_pil = Image.open("../images/movenet-singlepose-lightning.jpg")
 
 ## Instantiate the model class
 model = rpd.MovenetSingleposeLightning()
@@ -494,3 +494,51 @@ print(keypoint_with_scores)
 ---
 ### Model: Enhanced Super Resolution GAN
 Category: Image Super Resolution
+
+**Class:** readyml.imagerestoration.MIRNet
+
+![Low Resolution](img/lowres.jpg)
+![High Resolution](img/highres.jpg)
+
+**Example of use:**
+```python
+from readyml import superresolution as rsr
+import PIL.Image as Image
+import tensorflow as tf
+
+# Read an image
+image_pil = Image.open("../images/lowres.jpg")
+
+# Instantiate the model class
+model = rsr.ESRgan()
+
+image = model.infer(image_pil)
+
+tf.keras.preprocessing.image.save_img("highres.jpg", image)
+```
+
+---
+## Image Restoration
+
+---
+### Model: MRNet
+Category: Image Restoration
+
+**Class:** readyml.imagerestoration.MIRNet
+
+![Image restoration](img/imagerestoration.jpg)
+
+**Example of use:**
+```python
+from readyml import imagerestoration as rir
+import PIL.Image as Image
+
+# Read an image
+image_pil = Image.open("../images/mirnet.jpg")
+
+# Instantiate the model class
+model = rir.MIRNet()
+new_image = model.infer(image_pil)
+
+new_image.save("restored_image.jpg")
+```

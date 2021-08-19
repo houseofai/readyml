@@ -14,6 +14,8 @@
 | [Image Generation](#user-content-image-generation) | Generate image from a category from scratch |
 | [Face Generation](#user-content-face-generation) | Generate a face image from scratch |
 | [Pose Detection](#user-content-pose-detection) | Detect the keypoints of human pose (ankles, shoulders, elbows, ...) |
+| [Image Restoration](#user-content-image-restoration) |  |
+| [Image Super Resolution](#user-content-super-resolution) |  |
 
 
 ## Prerequisites
