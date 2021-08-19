@@ -43,5 +43,6 @@
   "progan-128": "https://tfhub.dev/google/progan-128/1",
   "movenet-singlepose-lightning":"https://tfhub.dev/google/movenet/singlepose/lightning/4",
   "esrgan-tf2": "https://tfhub.dev/captain-pool/esrgan-tf2/1",
-  "movinet-a5": "https://tfhub.dev/tensorflow/movinet/a5/base/kinetics-600/classification/3"
+  "movinet-a5": "https://tfhub.dev/tensorflow/movinet/a5/base/kinetics-600/classification/3",
+  "mirnet_low_light_weights_best": "https://www.dropbox.com/s/fdiemwyizwnt19y/low_light_weights_best.h5?dl=1"
 }

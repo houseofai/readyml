@@ -112,4 +112,4 @@ class BigGan256(ImageGenerationModel):
 
 class BigGan512(ImageGenerationModel):
     def __init__(self):
-        super().__init__('biggan-512')
+        super().__init__('biggan-512')        

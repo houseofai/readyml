@@ -17,14 +17,17 @@ class PoseDetection():
         image = np.array(image_pil)
         image = tf.expand_dims(image, axis=0)
         image = tf.cast(tf.image.resize_with_pad(image, 192, 192), dtype=tf.int32)
-        return self.model(image)['output_0']
+        output = self.model(image)['output_0']
+        #output = np.array(output)
+        return output.numpy() #json.dumps(output.numpy(), sort_keys=True, indent=4)
 
     def draw(self, image_pil, keypoint_with_scores):
         image = np.array(image_pil)
         display_image = tf.expand_dims(image, axis=0)
         display_image = tf.cast(tf.image.resize_with_pad(display_image, 1280, 1280), dtype=tf.int32)
         output_overlay = viz_utils.draw_prediction_on_image(
-        np.squeeze(display_image.numpy(), axis=0), keypoint_with_scores)
+            np.squeeze(display_image.numpy(), axis=0),
+            keypoint_with_scores)
         return output_overlay
 
 class MovenetSingleposeLightning(PoseDetection):

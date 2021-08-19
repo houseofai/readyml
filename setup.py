@@ -21,7 +21,9 @@ REQUIRED = [
     'scipy',
     'imageio',
     'matplotlib',
-    'opencv-python'
+    'opencv-python',
+    'mirnet @ git+https://git@github.com/houseofai/MIRNet#egg=mirnet',
+    'requests'
 ]
 
 ################################################################################
@@ -93,7 +95,7 @@ setup(
     long_description_content_type='text/markdown',
     install_requires=REQUIRED,
 
-    #include_package_data=True,
+    include_package_data=True,
     packages=['readyml', 'readyml.utils', 'readyml.labels'],
     #packages=find_packages(NAME),
 

@@ -18,6 +18,8 @@ class ClassificationModel():
 
         self.module = tf.keras.Model(inputs, outputs, name='movinet')
 
+    def infer(self, frame):
+        return self.module(frame)
 
 
 class MovienetA5(ClassificationModel):
