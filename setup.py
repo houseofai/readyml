@@ -11,7 +11,7 @@ DESCRIPTION = 'ReadyML - Easy and Ready Machine Learning.'
 URL = 'https://github.com/houseofai/readyml'
 AUTHOR = 'Odyssée'
 REQUIRES_PYTHON = '>=3.7'
-VERSION = '0.0.2'
+VERSION = '0.0.3'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
