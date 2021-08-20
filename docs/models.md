@@ -599,3 +599,106 @@ new_image = model.infer(image_pil)
 
 new_image.save("restored_image.jpg")
 ```
+
+---
+## Text Translation
+
+---
+### Model: Neural Machine Translation: English to French
+Category: Text Translation
+
+**Class:** readyml.texttranslation.Translation_EnglishToFrench
+
+**Example of use:**
+```python
+from readyml import texttranslation as rtt
+
+model = rtt.Translation_EnglishToFrench()
+text = model.infer("Hello world!")
+print(text)
+```
+
+**Result:**
+```
+Bonjour à tous !
+```
+
+---
+### Model: Neural Machine Translation: English to German
+Category: Text Translation
+
+**Class:** readyml.texttranslation.Translation_EnglishToGerman
+
+**Example of use:**
+```python
+from readyml import texttranslation as rtt
+
+model = rtt.Translation_EnglishToGerman()
+text = model.infer("Hello world!")
+print(text)
+```
+
+**Result:**
+```
+
+```
+
+---
+### Model: Neural Machine Translation: German to English
+Category: Text Translation
+
+**Class:** readyml.texttranslation.Translation_GermanToEnglish
+
+**Example of use:**
+```python
+from readyml import texttranslation as rtt
+
+model = rtt.Translation_GermanToEnglish()
+text = model.infer("TBD")
+print(text)
+```
+
+**Result:**
+```
+
+```
+
+---
+### Model: Neural Machine Translation: English to Russian
+Category: Text Translation
+
+**Class:** readyml.texttranslation.Translation_EnglishToRussian
+
+**Example of use:**
+```python
+from readyml import texttranslation as rtt
+
+model = rtt.Translation_EnglishToRussian()
+text = model.infer("Hello world!")
+print(text)
+```
+
+**Result:**
+```
+
+```
+
+---
+### Model: Neural Machine Translation: Russian to English
+Category: Text Translation
+
+**Class:** readyml.texttranslation.Translation_RussianToEnglish
+
+**Example of use:**
+```python
+from readyml import texttranslation as rtt
+
+model = rtt.Translation_RussianToEnglish()
+text = model.infer("")
+print(text)
+```
+
+**Result:**
+```
+
+```

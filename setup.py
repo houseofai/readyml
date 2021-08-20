@@ -27,7 +27,9 @@ REQUIRED = [
     # Image Restoration
     'mirnet @ git+https://git@github.com/houseofai/MIRNet#egg=mirnet',
     # Face Detection
-    'fastface'
+    'fastface',
+    # Transformer (NMT): https://pytorch.org/hub/pytorch_fairseq_translation/
+    'fastBPE', 'regex', 'sacremoses', 'subword_nmt', 'hydra-core', 'omegaconf'
 ]
 
 ################################################################################

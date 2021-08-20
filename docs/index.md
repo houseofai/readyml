@@ -17,6 +17,7 @@
 | [Image Restoration](#user-content-image-restoration) |  |
 | [Image Super Resolution](#user-content-super-resolution) |  |
 | [Face Detection](#user-content-face-detection) |  |
+| [Text Translation](#user-content-text-translation) | English to French, English to German, English to Russian, ... |
 
 
 ## Prerequisites
