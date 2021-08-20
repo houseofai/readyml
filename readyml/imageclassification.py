@@ -44,10 +44,19 @@ class ClassificationModel():
         image = tf.expand_dims(image, axis=0)
         return image
 
+    def _format(self, results):
+        formatted_result = []
+        for label, score in results:
+            score = np.around(score.astype(np.float)*100, 2)
+            formatted_result.append({"label":label, "score":score})
+        return json.dumps(formatted_result, sort_keys=True, indent=4)
+
     def infer(self, image):
         image = self._transform(image)
         prediction = self.model(image).numpy()[0]
-        return np.column_stack([self.labels, prediction])
+        results = np.column_stack([self.labels, prediction])
+        
+        return self._format(results)
 
 
 class NASNetLarge():
