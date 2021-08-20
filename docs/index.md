@@ -16,6 +16,7 @@
 | [Pose Detection](#user-content-pose-detection) | Detect the keypoints of human pose (ankles, shoulders, elbows, ...) |
 | [Image Restoration](#user-content-image-restoration) |  |
 | [Image Super Resolution](#user-content-super-resolution) |  |
+| [Face Detection](#user-content-face-detection) |  |
 
 
 ## Prerequisites

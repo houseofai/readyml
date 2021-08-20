@@ -457,6 +457,63 @@ image.save("myimage.jpeg")
 **Result:** A generated face image
 
 ---
+## Face Detection
+
+---
+### Model: Light Face Detection
+Category: Face Detection
+
+**Class:** readyml.facedetection.FaceDetection
+
+![Light Face Detection](img/lightfacedetection.jpg)
+
+**Reference:** https://github.com/borhanMorphy/light-face-detection
+
+**Example of use:**
+```python
+from readyml import facedetection as rfd
+import imageio
+
+img = imageio.imread("../images/faces.jpg")[:,:,:3]
+
+model = rfd.FaceDetectionModel()
+preds = model.infer(img)
+print(preds)
+```
+**Result:** Bouding boxes coordinates and confidence scores
+```
+[
+    {
+        "box": [
+            46,
+            19,
+            88,
+            70
+        ],
+        "score": 100.0
+    },
+    {
+        "box": [
+            94,
+            95,
+            133,
+            146
+        ],
+        "score": 100.0
+    },
+    {
+        "box": [
+            207,
+            44,
+            253,
+            106
+        ],
+        "score": 100.0
+    }
+]
+```
+
+---
 ## Pose Detection
 
 ---

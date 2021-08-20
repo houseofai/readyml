@@ -22,8 +22,12 @@ REQUIRED = [
     'imageio',
     'matplotlib',
     'opencv-python',
+    'requests',
+    # Models
+    # Image Restoration
     'mirnet @ git+https://git@github.com/houseofai/MIRNet#egg=mirnet',
-    'requests'
+    # Face Detection
+    'fastface'
 ]
 
 ################################################################################
