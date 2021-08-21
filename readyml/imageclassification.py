@@ -1,7 +1,7 @@
 import tensorflow_hub as hub
 import tensorflow as tf
 import numpy as np
-import os, json
+import os
 from readyml.labels import labels_loader
 
 from tensorflow.keras.preprocessing import image as img_prep
@@ -44,19 +44,20 @@ class ClassificationModel():
         image = tf.expand_dims(image, axis=0)
         return image
 
-    def _format(self, results):
+    def _format(self, results, threshold):
         formatted_result = []
         for label, score in results:
             score = np.around(score.astype(np.float)*100, 2)
-            formatted_result.append({"label":label, "score":score})
-        return json.dumps(formatted_result, sort_keys=True, indent=4)
+            if score >= threshold:
+                formatted_result.append({"label":label, "score":score})
+        return formatted_result #json.dumps(formatted_result, sort_keys=True, indent=4)
 
-    def infer(self, image):
+    def infer(self, image, threshold=10):
         image = self._transform(image)
         prediction = self.model(image).numpy()[0]
         results = np.column_stack([self.labels, prediction])
-        
-        return self._format(results)
+
+        return self._format(results, threshold)
 
 
 class NASNetLarge():
@@ -80,7 +81,7 @@ class NASNetLarge():
             score = np.around(score.astype(np.float)*100, 2)
             if score >= threshold:
                 formatted_result.append({"label":label, "score":score})
-        return json.dumps(formatted_result, sort_keys=True, indent=4)
+        return formatted_result #json.dumps(formatted_result, sort_keys=True, indent=4)
 
 
     def infer(self, image, threshold=10):
